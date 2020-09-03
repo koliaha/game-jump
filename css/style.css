@@ -65,7 +65,7 @@ body {
 
 #mesover {
   position: absolute;
-  font-size: 50px;
+  font-size: 30px;
   left: 50%;
   top: 50%;
   -webkit-transform: translateX(-50%);

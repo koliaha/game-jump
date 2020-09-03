@@ -3,6 +3,7 @@ let process = false
 let gameOver = false
 let fdown = 0.9
 let pos = 0;
+let startgame = 0
 let mes = document.querySelector('#mesover')
 let ground = document.querySelector('.main-content')
 document.addEventListener('keypress', (event) => {
@@ -15,14 +16,16 @@ document.addEventListener('keypress', (event) => {
 })
 objectsGen()
 
-mes.addEventListener('click', (e)=>{
+mes.addEventListener('click', (e) => {
     gameOver = false;
     mes.style.opacity = "0"
     let arrObj = document.querySelectorAll('.mainObject')
-    arrObj.forEach((el)=>{
+    arrObj.forEach((el) => {
         el.remove()
     })
     mes.style.opacity = "0"
+    startgame = 0
+    pos = 0;
     objectsGen()
 })
 
@@ -30,6 +33,8 @@ function objectsGen() {
     let objPos = 1000;
     let rndTime = Math.random() * 4000
     const objectMain = document.createElement('div')
+    startgame++;
+    console.log(startgame)
     if (gameOver == false) {
         objectMain.classList.add('mainObject')
         console.log('Playing...')
@@ -39,16 +44,25 @@ function objectsGen() {
     let timeObj = setInterval(() => {
         if (objPos > 0 && objPos < 60 && pos < 60) {
             clearInterval(timeObj)
+            mes.innerHTML = 'Game Over'
             mes.style.opacity = "1"
+            gameOver = true
+        }
+        if (startgame == 10) {
+            clearInterval(timeObj)
+            mes.style.opacity = "1"
+            mes.innerHTML = 'Game Complited'
             gameOver = true
         }
         objPos -= 10;
         objectMain.style.left = objPos + 'px'
     }, 20)
+    
     if (gameOver == false) {
         setTimeout(objectsGen, rndTime)
     }
 }
+
 function upFunc() {
     let counter = 0;
     let startTimer = setInterval(() => {
